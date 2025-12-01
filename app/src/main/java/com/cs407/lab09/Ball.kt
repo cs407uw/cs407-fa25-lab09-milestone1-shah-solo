@@ -38,9 +38,12 @@ class Ball(
             accY = yAcc
             return
         }
-        val gravityX = -xAcc
-        val gravityY = -yAcc
+        val GRAVITY_SCALE = 15f
 
+        val gravityX = -xAcc * GRAVITY_SCALE
+        val gravityY = yAcc * GRAVITY_SCALE
+
+        println("Ball - xAcc: $xAcc, gravityX: $gravityX, deltaX will be calculated")
         // Equation 1: v1 = v0 + 1/2(a1 + a0)(t1 - t0)
         val newVelocityX = velocityX + 0.5f * (accX + gravityX) * dT
         val newVelocityY = velocityY + 0.5f * (accY + gravityY) * dT
@@ -48,9 +51,10 @@ class Ball(
         // Equation 2: l = v0·(t1-t0) + 1/6·(t1-t0)²·(3a0 + a1)
         val deltaX = velocityX * dT + (1f / 6f) * dT * dT * (3 * accX + gravityX)
         val deltaY = velocityY * dT + (1f / 6f) * dT * dT * (3 * accY + gravityY)
-
         posX += deltaX
         posY += deltaY
+
+        println("Ball - posX after: $posX")
 
         velocityX = newVelocityX
         velocityY = newVelocityY
@@ -69,31 +73,31 @@ class Ball(
         // (Check all 4 walls: left, right, top, bottom)
         val radius = ballSize / 2f
 
-        //left boundary
-        if (posX - radius < 0) {
-            posX = radius
-            velocityX = -velocityX * 0.8f
+        // Left boundary
+        if (posX < 0) {
+            posX = 0f
+            velocityX = -velocityX * 0.2f
             accX = 0f
         }
 
-        //right boundary
-        if (posX + radius > backgroundWidth) {
-            posX = backgroundWidth - radius
-            velocityX = -velocityX * 0.8f
+        // Right boundary - account for ball width
+        if (posX + ballSize > backgroundWidth) {
+            posX = backgroundWidth - ballSize
+            velocityX = -velocityX * 0.2f
             accX = 0f
         }
 
-        //top boundary
-        if (posY - radius < 0) {
-            posY = radius
-            velocityY = -velocityY * 0.8f
+        // Top boundary
+        if (posY < 0) {
+            posY = 0f
+            velocityY = -velocityY * 0.2f
             accY = 0f
         }
 
-        //bottom boundary
-        if (posY + radius > backgroundHeight) {
-            posY = backgroundHeight - radius
-            velocityY = -velocityY * 0.8f
+        // Bottom boundary - account for ball height
+        if (posY + ballSize > backgroundHeight) {
+            posY = backgroundHeight - ballSize
+            velocityY = -velocityY * 0.2f
             accY = 0f
         }
     }

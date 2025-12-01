@@ -71,7 +71,7 @@ fun GameScreen(viewModel: BallViewModel) {
 
     // TODO: Get the gravitySensor
     val gravitySensor = remember {
-        sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY)
+        sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)  // Changed from TYPE_GRAVITY
     }
 
     // This effect runs when the composable enters the screen

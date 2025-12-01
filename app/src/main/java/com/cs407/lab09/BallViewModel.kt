@@ -37,7 +37,8 @@ class BallViewModel : ViewModel() {
         // Ensure ball is initialized
         val currentBall = ball ?: return
 
-        if (event.sensor.type == Sensor.TYPE_GRAVITY) {
+        println("ViewModel - Sensor X: ${event.values[0]}, Y: ${event.values[1]}, Z: ${event.values[2]}")
+        if (event.sensor.type == Sensor.TYPE_ACCELEROMETER) {
             if (lastTimestamp != 0L) {
                 // TODO: Calculate the time difference (dT) in seconds
                 val NS2S = 1.0f / 1000000000.0f
